@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Post;
+use App\Models\Prestasi;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,6 +13,8 @@ class HomeController extends Controller
         return view('home.index',[
             'title' => "Home",
             'post' => Post::latest()->get(),
+            'banners' => Banner::latest()->get(),
+            'prestasis' => Prestasi::latest()->get()
         ]);
     }
 }

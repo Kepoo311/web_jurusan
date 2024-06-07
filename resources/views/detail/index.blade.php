@@ -42,7 +42,7 @@
                     <h1 class="text-3xl font-robot font-semibold p-3">{{ $post->judul }}</h1>
                     <p class="px-3 font-robot"><small>{{ $post->created_at->diffForHumans() }}</small></p>
                     <div class="w-full flex justify-center items-center">
-                    <img src="{{asset('img/thumbnail/'.$post->thumbnail)}}" alt="">
+                    <img class="max-w-[1920px] max-h-[600px]" src="{{asset('img/thumbnail/'.$post->thumbnail)}}" alt="">
                     </div>
                 </header>
                 <article class="p-2 font-robot">

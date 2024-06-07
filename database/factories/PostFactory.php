@@ -17,6 +17,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
+            'thumbnail' => '1717743211_Copy of Untitled Design.png',
             'judul' => fake()->sentence(),
             'excerpt' => fake()->paragraph(),
             'body' => collect($this->faker->paragraphs(mt_rand(10,25)))

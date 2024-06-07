@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('css/tiny-slider.css')}}">
-    <link rel="stylesheet" href="{{asset('aos/aos.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/tiny-slider.css') }}">
+    <link rel="stylesheet" href="{{ asset('aos/aos.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -29,7 +29,7 @@
     <title>{{ $title }}</title>
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 
     <main class="flex flex-col h-min-screen">
         @include('layouts.navbar')
@@ -38,37 +38,21 @@
                 data-carousel="slide">
                 <!-- Carousel wrapper -->
                 <div class="relative h-56 rounded-lg md:h-[30rem]">
-                    <!-- Item 1 -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="https://placehold.co/1080x500"
-                            class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                    </div>
-                    <!-- Item 2 -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="https://placehold.co/1080x500"
-                            class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                    </div>
-                    <!-- Item 3 -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="https://placehold.co/1080x500"
-                            class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                    </div>
-                    <!-- Item 4 -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="https://placehold.co/1080x500"
-                            class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                    </div>
+                    @foreach ($banners as $banner)
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <img src="{{ asset('img/banners/' . $banner->name) }}"
+                                class="absolute block lg:max-w-[1700px] lg:max-h-[500px] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                alt="...">
+                        </div>
+                    @endforeach
+
                 </div>
                 <!-- Slider indicators -->
                 <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
-                        data-carousel-slide-to="0"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
-                        data-carousel-slide-to="1"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
-                        data-carousel-slide-to="2"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
-                        data-carousel-slide-to="2"></button>
+                    @foreach ($banners as $item)
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="true"
+                            aria-label="{{ $loop->index + 1 }}" data-carousel-slide-to="{{ $loop->index }}"></button>
+                    @endforeach
                 </div>
                 <!-- Slider controls -->
                 <button type="button"
@@ -101,15 +85,18 @@
         </section>
 
         <section class="h-fit bg-white flex flex-row gap-5 items-center justify-center w-full mt-5 mb-2">
-            <div data-aos="flip-up" data-aos-duration="700" data-modal-target="visi-modal" data-modal-toggle="visi-modal" id="visi"
+            <div data-aos="flip-up" data-aos-duration="700" data-modal-target="visi-modal"
+                data-modal-toggle="visi-modal" id="visi"
                 class="cursor-pointer bg-white w-48 h-20 rounded-lg shadow-lg border border-[#cacaca5e] flex justify-center items-center hover:bg-blue-500 hover:text-white">
                 <p class="font-poppins font-bold text-3xl cursor-pointer">VISI</p>
             </div>
-            <div data-aos="flip-up" data-aos-duration="700" data-modal-target="misi-modal" data-modal-toggle="misi-modal" id="misi"
+            <div data-aos="flip-up" data-aos-duration="700" data-modal-target="misi-modal"
+                data-modal-toggle="misi-modal" id="misi"
                 class="cursor-pointer bg-white w-48 h-20 rounded-lg shadow-lg border border-[#cacaca5e] flex justify-center items-center hover:bg-blue-500 hover:text-white">
                 <p class="font-poppins font-bold text-3xl cursor-pointer">MISI</p>
             </div>
-            <div data-aos="flip-up" data-aos-duration="700" data-modal-target="tujuan-modal" data-modal-toggle="tujuan-modal" id="tujuan"
+            <div data-aos="flip-up" data-aos-duration="700" data-modal-target="tujuan-modal"
+                data-modal-toggle="tujuan-modal" id="tujuan"
                 class="cursor-pointer bg-white w-48 h-20 rounded-lg shadow-lg border border-[#cacaca5e] flex justify-center items-center hover:bg-blue-500 hover:text-white">
                 <p class="font-poppins font-bold text-3xl cursor-pointer">TUJUAN</p>
             </div>
@@ -304,89 +291,58 @@
         <section data-aos="zoom-in-down" data-aos-duration="1000" class="h-fit bg-white flex flex-col">
 
             <head>
-                <p class="text-xl xl:text-3xl text-black font-poppins font-semibold p-5">Our Achievement</p>
+                <p class="text-xl xl:text-3xl text-black font-poppins font-semibold p-5">Murid Berprestasi</p>
             </head>
 
-            <div id="slide-penghargaan"
-                class="card p-5 flex justify-center items-center gap-2 w-full">
-                <div class="w-w-80 h-96 bg-[#3a85ff] shadow-lg rounded-lg flex flex-col">
-                    <div class="header flex flex-col w-full justify-center items-center text-center pt-5">
-                        <img class="w-32 h-32 rounded-full" src="https://placehold.co/100x100" alt="">
-                        <h1 class="font-monts font-bold text-2xl text-white pt-2">Nama Siswa</h1>
-                        <h2 class="font-monts font-bold text-md text-white pt-2">Jurusan Siswa</h2>
+            <div id="slide-penghargaan" class="card p-5 flex justify-center items-center gap-2 w-full">
+                @foreach ($prestasis as $prestasi)
+                    <div class="w-w-80 h-96 bg-[#3a85ff] shadow-lg rounded-lg flex flex-col">
+                        <div class="header flex flex-col w-full justify-center items-center text-center pt-5">
+                            <img class="w-32 h-32 rounded-full"
+                                src="{{ asset('img/foto_murid/' . $prestasi->foto_murid) }}" alt="">
+                            <h1 class="font-monts font-bold text-2xl text-white pt-2">{{ $prestasi->nama }}</h1>
+                            <h2 class="font-monts font-bold text-md text-white pt-2">{{ $prestasi->kelas }}</h2>
+                        </div>
+                        <div class="info flex flex-col w-full justify-center items-center text-center pt-3">
+                            <h1 class="font-monts font-bold text-sm text-white pt-2">{{ $prestasi->perolehan }}</h1>
+                            <h2 class="font-monts font-bold text-sm text-white">{{ $prestasi->bidang }}</h2>
+                        </div>
+                        <div class="footer flex flex-col w-full justify-center items-center text-center pt-3">
+                            <h1 class="font-monts font-bold text-sm text-white pt-2">{{ $prestasi->perlombaan }}</h1>
+                            <h2 class="font-monts font-bold text-sm text-white">{{ $prestasi->tingkat }}</h2>
+                            <h2 class="font-monts font-bold text-sm text-white">{{ $prestasi->periode }}</h2>
+                        </div>
                     </div>
-                    <div class="info flex flex-col w-full justify-center items-center text-center pt-3">
-                        <h1 class="font-monts font-bold text-sm text-white pt-2">Yang di peroleh</h1>
-                        <h2 class="font-monts font-bold text-sm text-white">Bidang</h2>
-                    </div>
-                    <div class="footer flex flex-col w-full justify-center items-center text-center pt-3">
-                        <h1 class="font-monts font-bold text-sm text-white pt-2">Nama Perlombaan</h1>
-                        <h2 class="font-monts font-bold text-sm text-white">Tingkat</h2>
-                        <h2 class="font-monts font-bold text-sm text-white">Periode</h2>
-                    </div>
-                </div>
-                <div class="w-w-80 h-96 bg-[#3a85ff] shadow-lg rounded-lg flex flex-col">
-                    <div class="header flex flex-col w-full justify-center items-center text-center pt-5">
-                        <img class="w-32 h-32 rounded-full" src="https://placehold.co/100x100" alt="">
-                        <h1 class="font-monts font-bold text-2xl text-white pt-2">Nama Siswa</h1>
-                        <h2 class="font-monts font-bold text-md text-white pt-2">Jurusan Siswa</h2>
-                    </div>
-                    <div class="info flex flex-col w-full justify-center items-center text-center pt-3">
-                        <h1 class="font-monts font-bold text-sm text-white pt-2">Yang di peroleh</h1>
-                        <h2 class="font-monts font-bold text-sm text-white">Bidang</h2>
-                    </div>
-                    <div class="footer flex flex-col w-full justify-center items-center text-center pt-3">
-                        <h1 class="font-monts font-bold text-sm text-white pt-2">Nama Perlombaan</h1>
-                        <h2 class="font-monts font-bold text-sm text-white">Tingkat</h2>
-                        <h2 class="font-monts font-bold text-sm text-white">Periode</h2>
-                    </div>
-                </div>
-                <div class="w-w-80 h-96 bg-[#3a85ff] shadow-lg rounded-lg flex flex-col">
-                    <div class="header flex flex-col w-full justify-center items-center text-center pt-5">
-                        <img class="w-32 h-32 rounded-full" src="https://placehold.co/100x100" alt="">
-                        <h1 class="font-monts font-bold text-2xl text-white pt-2">Nama Siswa</h1>
-                        <h2 class="font-monts font-bold text-md text-white pt-2">Jurusan Siswa</h2>
-                    </div>
-                    <div class="info flex flex-col w-full justify-center items-center text-center pt-3">
-                        <h1 class="font-monts font-bold text-sm text-white pt-2">Yang di peroleh</h1>
-                        <h2 class="font-monts font-bold text-sm text-white">Bidang</h2>
-                    </div>
-                    <div class="footer flex flex-col w-full justify-center items-center text-center pt-3">
-                        <h1 class="font-monts font-bold text-sm text-white pt-2">Nama Perlombaan</h1>
-                        <h2 class="font-monts font-bold text-sm text-white">Tingkat</h2>
-                        <h2 class="font-monts font-bold text-sm text-white">Periode</h2>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </section>
 
-        <section data-aos="flip-up"  data-aos-duration="1000" class="h-fit bg-white flex flex-col py-5">
+        <section data-aos="flip-up" data-aos-duration="1000" class="h-fit bg-white flex flex-col py-5">
 
             <head>
                 <p class="text-3xl text-black font-poppins font-semibold p-5">Artikel</p>
             </head>
 
-            <div id="slide-info"
-                class="card p-5">
+            <div id="slide-info" class="card p-5">
                 @foreach ($post as $item)
                     <div>
-                    <a href="/post/{{ $item->judul }}"
-                        class="flex flex-col h-fit w-fit rounded-2xl shadow-xl overflow-hidden">
-                        <header class="h-[150px] w-[300px] overflow-hidden rounded-t-lg">
-                            <img src="{{asset('img/thumbnail/'.$item->thumbnail)}}" alt="">
-                        </header>
-                        <section class="w-full h-fit bg-white rounded-b-lg overflow-hidden">
-                            <header>
-                                <p
-                                    class="text-black font-monts font-bold text-md p-2 hover:text-gray-300 w-72 hover:underline">
-                                    {{ $item->judul }}</p>
+                        <a href="/post/{{ $item->judul }}"
+                            class="flex flex-col h-fit w-fit rounded-2xl shadow-xl overflow-hidden">
+                            <header class="h-[150px] w-[300px] overflow-hidden rounded-t-lg">
+                                <img src="{{ asset('img/thumbnail/' . $item->thumbnail) }}" alt="">
                             </header>
-                            <section>
-                                <p class="w-72 text-sm p-2 font-monts text-gray-50000">{{ $item->excerpt }}</p>
+                            <section class="w-full h-fit bg-white rounded-b-lg overflow-hidden">
+                                <header>
+                                    <p
+                                        class="text-black font-monts font-bold text-md p-2 hover:text-gray-300 w-72 hover:underline">
+                                        {{ $item->judul }}</p>
+                                </header>
+                                <section>
+                                    <p class="w-72 text-sm p-2 font-monts text-gray-50000">{{ $item->excerpt }}</p>
+                                </section>
                             </section>
-                        </section>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 @endforeach
             </div>
         </section>
@@ -422,11 +378,23 @@
 
             <p class="font-poppins text-center">RIANDRA 2024, All Rights Reserved.</p>
         </footer>
+        {{-- Back to top --}}
+        <div id="btt" data-dial-init class="fixed right-6 bottom-6 group">
+            <button type="button" aria-expanded="false" onclick="topFunction()"
+                class="flex items-center justify-center ml-auto text-white bg-blue-700 rounded-lg w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6v13m0-13 4 4m-4-4-4 4" />
+                </svg>
+            </button>
+        </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <script src="https://kit.fontawesome.com/65fd5af23f.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-    <script src="{{asset('aos/aos.js')}}"></script>
+    <script src="{{ asset('aos/aos.js') }}"></script>
 
     <script>
         AOS.init();
@@ -434,6 +402,7 @@
         var slider = tns({
             "container": "#slide-penghargaan",
             "loop": true,
+            "gutter": 10,
             "responsive": {
                 "576": {
                     "items": 1
@@ -447,20 +416,19 @@
             },
             "swipeAngle": false,
             "speed": 400,
-            "autoplay" : true,
+            "autoplay": true,
             "mouseDrag": true,
-            "controls" : false,
-            "autoplayButtonOutput" : false,
-            "autoplayTimeout" : 2000,
-            "center" : true,
-            "navPosition" : "bottom",
-        }
-        );
+            "controls": false,
+            "autoplayButtonOutput": false,
+            "autoplayTimeout": 2000,
+            "center": true,
+            "navPosition": "bottom",
+        });
 
-        var slideINFO = tns( {
+        var slideINFO = tns({
             "container": "#slide-info",
             "loop": true,
-            "gutter" : 10,
+            "gutter": 10,
             "responsive": {
                 "576": {
                     "items": 2,
@@ -474,17 +442,47 @@
             },
             "swipeAngle": false,
             "speed": 400,
-            "autoplay" : true,
+            "autoplay": true,
             "mouseDrag": true,
-            "controls" : false,
-            "autoplayButtonOutput" : false,
-            "autoplayTimeout" : 5000,
-            "center" : true,
-            "autoWidth" : true,
-            "navPosition" : "bottom",
-            "navAsThumbnails" : true
+            "controls": false,
+            "autoplayButtonOutput": false,
+            "autoplayTimeout": 5000,
+            "center": true,
+            "autoWidth": true,
+            "navPosition": "bottom",
+            "navAsThumbnails": true
         });
+
+        // Get the button:
+        let backtotop = document.getElementById("btt");
+        scrollFunction()
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                backtotop.style.display = "block";
+                backtotop.style.opacity = "1";
+            } else {
+                backtotop.style.opacity = "0";
+                backtotop.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
     </script>
+
+    <style>
+        html, body{
+            scroll-behavior: smooth;
+        }
+    </style>
 </body>
 
 </html>
